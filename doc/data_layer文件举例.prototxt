@@ -1,0 +1,116 @@
+name: "LeNet"
+layer {
+  name: "mnist"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  transform_param {
+    scale: 0.00390625
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
+  }
+  data_param {
+    source: "examples/mnist/mnist_train_lmdb"
+    batch_size: 64
+    backend: LMDB
+  }
+}
+
+name: "LeNet"
+layer {
+  name: "mnist"
+  type: "Data"
+  top: "data"
+  top: "label"
+  include {
+    phase: TRAIN
+  }
+  transform_param {
+    scale: 0.00390625
+    mean_file: "examples/mnist/"
+  }
+  data_param {
+    source: "examples/mnist/mnist_train_lmdb"
+    batch_size: 64
+    backend: LMDB
+  }
+}
+
+layer {  
+    name: "mnist"  
+    type: "ImageData"  
+    top: "data"  
+    top: "label"  
+    include {
+        phase: TRAIN  
+    }  
+    transform_param {    
+        scale: 0.00390625    
+        mean_value: 104
+        mean_value: 117
+        mean_value: 123 
+    }  
+    image_data_param {    
+        source: "data/trainval.txt"    
+        root_folder: "data/trainval/"    
+        new_height: 56    
+        new_width: 56    
+        is_color: false    
+        batch_size: 64    
+        shuffle: true  
+    }
+}
+
+layer {
+  name: "data"
+  type: "HDF5Data"
+  top: "data"
+  top: "label"
+  hdf5_data_param {
+    source: "examples/hdf5/data/trainval.txt"
+    batch_size: 10
+  }
+}
+
+layers {
+  name: "data"
+  type: WINDOW_DATA
+  top: "data"
+  top: "label"
+  window_data_param {
+    source: "window_data_train.txt"
+    batch_size: 64
+    crop_size: 256 
+    crop_mode: "warp"
+    fg_threshold: 0.5
+    bg_threshold: 0.5
+    fg_fraction: 0.25
+  }
+  transform_param {
+    mean_value: 128
+    mean_value: 128
+    mean_value: 128
+    mirror: false
+  }
+  include: { phase: TRAIN }
+}
+
+# 0
+/home/usr/data/01.jpg
+3
+770
+841
+7
+1 1.0 363 256 393 396
+2 0.6 238 244 379 384
+1 0.9 139 236 379 376
+1 0.4 234 230 374 370
+1 1.0 230 224 370 364
+3 1.0 235 219 375 359
+3 1.0 241 213 381 353
+# 1
+/home/usr/data/02.jpg
