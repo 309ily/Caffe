@@ -6,4 +6,6 @@
 照顾网络不好的同学，我把Caffe依赖的NugetPackages包上传到了网盘 https://pan.baidu.com/s/1KaLRVe1MJcqdblwXFhjpFA
 提取码  qoms
 
-下载后要放到Caffe同级目录
+下载后要与Caffe根目录在同级目录
+
+Caffe代码下载后要将CommonSettings.props.example 重命名为CommonSettings.props
